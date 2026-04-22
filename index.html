@@ -76,20 +76,31 @@
             font-size: 40px; font-weight: bold; cursor: pointer;
         }
 
-        /* Indicador de navegación */
         .nav-hint {
             position: absolute; bottom: 20px; color: white;
             font-size: 0.9em; background: rgba(0,0,0,0.5);
             padding: 5px 15px; border-radius: 20px;
         }
 
+        /* --- Estilos Footer --- */
         footer {
-            background-color: var(--footer-bg); color: #ecf0f1; padding: 30px;
+            background-color: var(--footer-bg); color: #ecf0f1; padding: 40px;
             border-radius: 12px; border-top: 5px solid var(--logo-lime);
+            line-height: 1.4;
         }
 
-        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-left, .footer-right { flex: 1; min-width: 250px; }
         .footer-right { text-align: right; }
+        
+        .footer-title { 
+            display: block; font-size: 1.2em; font-weight: bold; 
+            margin-bottom: 15px; color: var(--logo-lime);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        footer p { margin: 5px 0; font-size: 0.95em; }
+
     </style>
 </head>
 <body>
@@ -99,7 +110,7 @@
         <img src="logoInno.png" alt="Logo" class="header-logo">
         <div style="text-align: right;">
             <h1>Justificación de la Didáctica</h1>
-            <div style="opacity: 0.9;">Alicia R.W. de Camilloni</div>
+            <div style="opacity: 0.9;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
         </div>
     </header>
 
@@ -178,18 +189,23 @@
     <footer>
         <div class="footer-content">
             <div class="footer-left">
+                <span class="footer-title">Información Académica</span>
                 <p><strong>Cátedra:</strong> Didáctica General</p>
+                <p><strong>Carrera:</strong> Profesorado de Educación Secundaria en Tecnologías - Profesorado en Tecnologías</p>
+                <p><strong>Docente:</strong> Flavia Paola Rodriguez</p>
             </div>
             <div class="footer-right">
-                <p>Integrantes: Benitez, Chiappe, Benitez Dos Santos</p>
+                <span class="footer-title">Integrantes</span>
+                <p>Benitez Franco Pedro</p>
+                <p>Chiappe Gamarra, Lucas</p>
+                <p>Benitez Dos Santos Diego</p>
             </div>
         </div>
     </footer>
 </div>
 
 <script>
-    // Arreglo con todas las rutas de tus imágenes
-    const imagenes = ["1.PNG", "2.PNG", "3.PNG", "4.PNG", "5.PNG", "6.PNG", "7.PNG", "8.PNG"];
+    const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"];
     let indiceActual = 0;
 
     function ampliarImagen(indice) {
@@ -206,17 +222,13 @@
         document.getElementById("imgGrande").src = imagenes[indiceActual];
     }
 
-    // Eventos de teclado
     document.addEventListener('keydown', function(event) {
-        // Solo actuar si el modal está visible
         if (document.getElementById("miModal").style.display === "flex") {
             if (event.key === "ArrowRight") {
-                // Siguiente imagen (vuelve al inicio si llega al final)
                 indiceActual = (indiceActual + 1) % imagenes.length;
                 actualizarImagenModal();
             } 
             else if (event.key === "ArrowLeft") {
-                // Imagen anterior
                 indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
                 actualizarImagenModal();
             } 
@@ -226,7 +238,6 @@
         }
     });
 
-    // Cerrar modal al hacer clic fuera de la imagen
     window.onclick = function(event) {
         let modal = document.getElementById("miModal");
         if (event.target == modal) {
