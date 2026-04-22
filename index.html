@@ -6,17 +6,22 @@
     <title>Infografía: El Saber Didáctico - Camilloni</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #2980b9;
-            --bg: #f0f2f5;
-            --card-bg: #ffffff;
+            /* Colores extraídos del logo de Innovación */
+            --logo-magenta: #e6007e;
+            --logo-cyan: #00aeef;
+            --logo-yellow: #fff200;
+            --logo-lime: #8dc63f;
+            --primary-dark: #2c3e50;
+            --card-bg: rgba(255, 255, 255, 0.95);
             --text: #333;
             --footer-bg: #1a252f;
         }
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg);
+            /* Background con los colores del logo en degradado suave */
+            background: linear-gradient(135deg, #f0f9ff 0%, #fffdf0 50%, #fdf0f6 100%);
+            background-attachment: fixed;
             color: var(--text);
             margin: 0;
             padding: 20px;
@@ -34,15 +39,17 @@
             justify-content: space-between;
             margin-bottom: 40px;
             padding: 20px 40px;
-            background: var(--primary);
+            background: var(--primary-dark);
             color: white;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-bottom: 5px solid var(--logo-cyan);
         }
 
         .header-logo {
-            height: 60px; /* Ajusta según el tamaño de tu logo */
+            height: 80px;
             width: auto;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
         }
 
         .header-title-container {
@@ -50,14 +57,14 @@
             flex-grow: 1;
         }
 
-        h1 { margin: 0; font-size: 1.8em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: 1.8em; text-transform: uppercase; letter-spacing: 1px; }
         .subtitle { font-weight: 300; margin-top: 5px; opacity: 0.9; font-size: 1em; }
 
         /* --- Grilla de Tarjetas --- */
         .infographic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 50px;
         }
 
@@ -65,20 +72,29 @@
             background: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
-            border: 1px solid #eee;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        .card:hover { transform: translateY(-5px); }
+        .card:hover { 
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Bordes de colores variados para las tarjetas basados en el logo */
+        .card:nth-child(4n+1) { border-top: 6px solid var(--logo-magenta); }
+        .card:nth-child(4n+2) { border-top: 6px solid var(--logo-cyan); }
+        .card:nth-child(4n+3) { border-top: 6px solid var(--logo-yellow); }
+        .card:nth-child(4n+4) { border-top: 6px solid var(--logo-lime); }
 
         .card-image {
             width: 100%;
             height: 180px;
             object-fit: cover;
-            background-color: #dfe6e9;
+            background-color: #eee;
         }
 
         .card-content {
@@ -87,27 +103,29 @@
         }
 
         .card h2 {
-            color: var(--primary);
-            font-size: 1.1em;
+            color: var(--primary-dark);
+            font-size: 1.15em;
             margin: 0 0 12px 0;
-            border-bottom: 2px solid var(--accent);
             padding-bottom: 5px;
-            display: inline-block;
+            display: block;
+            border-bottom: 1px solid #eee;
         }
 
         .card p {
-            font-size: 0.9em;
-            line-height: 1.5;
+            font-size: 0.92em;
+            line-height: 1.6;
             margin: 0;
             color: #444;
+            text-align: justify;
         }
 
-        /* --- Footer con Columnas --- */
+        /* --- Footer --- */
         footer {
             background-color: var(--footer-bg);
             color: #ecf0f1;
             padding: 30px;
             border-radius: 12px;
+            border-top: 5px solid var(--logo-lime);
         }
 
         .footer-content {
@@ -127,15 +145,15 @@
 
         .footer-title {
             font-weight: bold;
-            color: var(--accent);
+            color: var(--logo-cyan);
             text-transform: uppercase;
-            font-size: 0.8em;
+            font-size: 0.85em;
             margin-bottom: 10px;
             display: block;
         }
 
         .footer-text {
-            font-size: 0.9em;
+            font-size: 0.95em;
             margin: 5px 0;
             line-height: 1.4;
         }
@@ -145,9 +163,9 @@
             margin-top: 20px;
             padding-top: 15px;
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.85em;
             font-style: italic;
-            color: #95a5a6;
+            color: #bdc3c7;
         }
     </style>
 </head>
@@ -157,73 +175,73 @@
     <header>
         <img src="logoInno.png" alt="Logo Innovación" class="header-logo">
         <div class="header-title-container">
-            <h1>Justificación de la Didáctica</h1>
-            <div class="subtitle">Alicia R.W. de Camilloni - El Saber Didáctico</div>
+            <h1>Justificación de la Didáctica [cite: 2]</h1>
+            <div class="subtitle">Alicia R.W. de Camilloni - El Saber Didáctico [cite: 1]</div>
         </div>
     </header>
 
     <div class="infographic-grid">
         <div class="card">
-            <img src="1.png" alt="La ética de los medios" class="card-image">
+            <img src="1.PNG" alt="Ética" class="card-image">
             <div class="card-content">
                 <h2>La ética de los medios</h2>
-                <p>No todas las formas de influencia sobre las personas son legitimas, es necesario considerar la correspondencia entre la formacion y la libertad del sujeto, mas alla de una “ideologia de la eficacia”.</p>
+                <p>No todas las formas de influencia sobre las personas son legitimas, es necesario considerar la correspondencia entre la formacion y la libertad del sujeto, mas alla de una “ideologia de la eficacia”[cite: 7, 8].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="2.png" alt="La variedad de la enseñanza" class="card-image">
+            <img src="2.PNG" alt="Variedad" class="card-image">
             <div class="card-content">
                 <h2>La variedad de la enseñanza</h2>
-                <p>Historicamente se ha enseñado de multiples formas con valores distintos. Si todas las modalidades fueran igualmente eficaces, la didactica seria innecesaria.</p>
+                <p>Historicamente se ha enseñado de multiples formas con valores distintos. Si todas las modalidades fueran igualmente eficaces, la didactica seria innecesaria[cite: 10, 11].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="3.png" alt="La lógica de los contenidos" class="card-image">
+            <img src="3.PNG" alt="Lógica" class="card-image">
             <div class="card-content">
                 <h2>La lógica de los contenidos</h2>
-                <p>La enseñanza no debe limitarse a transmitir los conocimientos con la misma logica con la que se descubrieron en sus disciplinas de origen.</p>
+                <p>La enseñanza no debe limitarse a transmitir los conocimientos con la misma logica con la que se descubrieron en sus disciplinas de origen[cite: 14].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="4.png" alt="La crítica curricular" class="card-image">
+            <img src="4.PNG" alt="Crítica" class="card-image">
             <div class="card-content">
                 <h2>La crítica curricular</h2>
-                <p>Los curriculos deben someterse a una critica constante, ya que cambian segun la sociedad, la cultura y la clase social.</p>
+                <p>Los curriculos deben someterse a una critica constante, ya que cambian segun la sociedad, la cultura y la clase social[cite: 16].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="5.png" alt="La inclusión real" class="card-image">
+            <img src="5.PNG" alt="Inclusión" class="card-image">
             <div class="card-content">
                 <h2>La inclusión real</h2>
-                <p>Aunque la educacion se ha democratizado, los aprendizajes no son iguales para todos; la didactica es necesaria para lograr que todos desarrollen habilidades de orden superior y no solo algunos.</p>
+                <p>Aunque la educacion se ha democratizado, los aprendizajes no son iguales para todos; la didactica es necesaria para lograr que todos desarrollen habilidades de orden superior y no solo algunos[cite: 18, 19].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="6.png" alt="La superación de las aptitudes naturales" class="card-image">
+            <img src="6.PNG" alt="Aptitudes" class="card-image">
             <div class="card-content">
                 <h2>Superación de aptitudes</h2>
-                <p>La enseñanza no esta coartada por las aptitudes innatas, la didactica busca reconocer y modificar significativamente los atributos de los estudiantes.</p>
+                <p>La enseñanza no esta coartada por las aptitudes innatas, la didactica busca reconocer y modificar significativamente los atributos de los estudiantes[cite: 23, 24].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="7.png" alt="La complejidad de la evaluación" class="card-image">
+            <img src="7.PNG" alt="Evaluación" class="card-image">
             <div class="card-content">
                 <h2>La complejidad de la evaluación</h2>
-                <p>Evaluar no se reduce a aplicar reglamentaciones o escalas de calificacion; es un proceso complejo, variable e imprevisto que la didactica debe estudiar.</p>
+                <p>Evaluar no se reduce a aplicar reglamentaciones o escalas de calificacion; es un proceso complejo, variable e imprevisto que la didactica debe estudiar[cite: 28, 29].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="8.png" alt="La profesionalización docente" class="card-image">
+            <img src="8.PNG" alt="Profesionalización" class="card-image">
             <div class="card-content">
                 <h2>La profesionalización docente</h2>
-                <p>Enseñar no es un talento natural ni una tarea facil; requiere la construccion de conocimientos especificos para poder enseñar mejor.</p>
+                <p>Enseñar no es un talento natural ni una tarea facil; requiere la construccion de conocimientos especificos para poder enseñar mejor[cite: 32, 33].</p>
             </div>
         </div>
     </div>
@@ -244,7 +262,7 @@
             </div>
         </div>
         <div class="footer-divider">
-            "La didáctica es una disciplina teórica que estudia la acción pedagógica desde su descripción, explicación y fundamentación."
+            "La didáctica es una disciplina teórica que estudia la acción pedagógica desde su descripción, explicación y fundamentación[cite: 36]."
         </div>
     </footer>
 </div>
