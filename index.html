@@ -6,7 +6,7 @@
     <title>Infografía: El Saber Didáctico - Camilloni</title>
     <style>
         :root {
-            /* Colores extraídos del logo de Innovación */
+            /* Colores inspirados en el logo de Innovación */
             --logo-magenta: #e6007e;
             --logo-cyan: #00aeef;
             --logo-yellow: #fff200;
@@ -19,8 +19,12 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            /* Background con los colores del logo en degradado suave */
-            background: linear-gradient(135deg, #f0f9ff 0%, #fffdf0 50%, #fdf0f6 100%);
+            /* Fondo con degradado inspirado en los colores del círculo del logo */
+            background: linear-gradient(135deg, 
+                rgba(0, 174, 239, 0.1) 0%, 
+                rgba(141, 198, 63, 0.1) 25%, 
+                rgba(255, 242, 0, 0.1) 50%, 
+                rgba(230, 0, 126, 0.1) 100%);
             background-attachment: fixed;
             color: var(--text);
             margin: 0;
@@ -32,7 +36,7 @@
             margin: 0 auto;
         }
 
-        /* --- Header con Logo --- */
+        /* --- Header --- */
         header {
             display: flex;
             align-items: center;
@@ -43,13 +47,13 @@
             color: white;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            /* Borde inferior con el color cian del logo */
             border-bottom: 5px solid var(--logo-cyan);
         }
 
         .header-logo {
             height: 80px;
             width: auto;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
         }
 
         .header-title-container {
@@ -57,7 +61,7 @@
             flex-grow: 1;
         }
 
-        h1 { margin: 0; font-size: 1.8em; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { margin: 0; font-size: 1.8em; text-transform: uppercase; }
         .subtitle { font-weight: 300; margin-top: 5px; opacity: 0.9; font-size: 1em; }
 
         /* --- Grilla de Tarjetas --- */
@@ -75,16 +79,13 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             border: 1px solid rgba(0,0,0,0.05);
         }
 
-        .card:hover { 
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-        }
+        .card:hover { transform: translateY(-10px); }
 
-        /* Bordes de colores variados para las tarjetas basados en el logo */
+        /* Colores dinámicos en el borde superior para cada tarjeta */
         .card:nth-child(4n+1) { border-top: 6px solid var(--logo-magenta); }
         .card:nth-child(4n+2) { border-top: 6px solid var(--logo-cyan); }
         .card:nth-child(4n+3) { border-top: 6px solid var(--logo-yellow); }
@@ -104,15 +105,14 @@
 
         .card h2 {
             color: var(--primary-dark);
-            font-size: 1.15em;
+            font-size: 1.1em;
             margin: 0 0 12px 0;
             padding-bottom: 5px;
-            display: block;
             border-bottom: 1px solid #eee;
         }
 
         .card p {
-            font-size: 0.92em;
+            font-size: 0.9em;
             line-height: 1.6;
             margin: 0;
             color: #444;
@@ -125,6 +125,7 @@
             color: #ecf0f1;
             padding: 30px;
             border-radius: 12px;
+            /* Borde superior con el color verde del logo */
             border-top: 5px solid var(--logo-lime);
         }
 
@@ -136,27 +137,19 @@
             gap: 20px;
         }
 
-        .footer-left, .footer-right {
-            flex: 1;
-            min-width: 280px;
-        }
-
+        .footer-left, .footer-right { flex: 1; min-width: 280px; }
         .footer-right { text-align: right; }
 
         .footer-title {
             font-weight: bold;
             color: var(--logo-cyan);
             text-transform: uppercase;
-            font-size: 0.85em;
+            font-size: 0.8em;
             margin-bottom: 10px;
             display: block;
         }
 
-        .footer-text {
-            font-size: 0.95em;
-            margin: 5px 0;
-            line-height: 1.4;
-        }
+        .footer-text { font-size: 0.9em; margin: 5px 0; line-height: 1.4; }
 
         .footer-divider {
             border-top: 1px solid #34495e;
@@ -175,14 +168,14 @@
     <header>
         <img src="logoInno.png" alt="Logo Innovación" class="header-logo">
         <div class="header-title-container">
-            <h1>Justificación de la Didáctica [cite: 2]</h1>
-            <div class="subtitle">Alicia R.W. de Camilloni - El Saber Didáctico [cite: 1]</div>
+            <h1>Justificación de la Didáctica</h1>
+            <div class="subtitle">Alicia R.W. de Camilloni - El Saber Didáctico</div>
         </div>
     </header>
 
     <div class="infographic-grid">
         <div class="card">
-            <img src="1.PNG" alt="Ética" class="card-image">
+            <img src="1.PNG" alt="Ética de los medios" class="card-image">
             <div class="card-content">
                 <h2>La ética de los medios</h2>
                 <p>No todas las formas de influencia sobre las personas son legitimas, es necesario considerar la correspondencia entre la formacion y la libertad del sujeto, mas alla de una “ideologia de la eficacia”[cite: 7, 8].</p>
@@ -190,7 +183,7 @@
         </div>
 
         <div class="card">
-            <img src="2.PNG" alt="Variedad" class="card-image">
+            <img src="2.PNG" alt="Variedad de la enseñanza" class="card-image">
             <div class="card-content">
                 <h2>La variedad de la enseñanza</h2>
                 <p>Historicamente se ha enseñado de multiples formas con valores distintos. Si todas las modalidades fueran igualmente eficaces, la didactica seria innecesaria[cite: 10, 11].</p>
@@ -198,15 +191,15 @@
         </div>
 
         <div class="card">
-            <img src="3.PNG" alt="Lógica" class="card-image">
+            <img src="3.PNG" alt="Lógica de los contenidos" class="card-image">
             <div class="card-content">
                 <h2>La lógica de los contenidos</h2>
-                <p>La enseñanza no debe limitarse a transmitir los conocimientos con la misma logica con la que se descubrieron en sus disciplinas de origen[cite: 14].</p>
+                <p>La enseñanza no debe limitarse a transmitir los conocimientos con la misma logica con la que se descubrieron en sus disciplinas de origen[cite: 13, 14].</p>
             </div>
         </div>
 
         <div class="card">
-            <img src="4.PNG" alt="Crítica" class="card-image">
+            <img src="4.PNG" alt="Crítica curricular" class="card-image">
             <div class="card-content">
                 <h2>La crítica curricular</h2>
                 <p>Los curriculos deben someterse a una critica constante, ya que cambian segun la sociedad, la cultura y la clase social[cite: 16].</p>
@@ -214,7 +207,7 @@
         </div>
 
         <div class="card">
-            <img src="5.PNG" alt="Inclusión" class="card-image">
+            <img src="5.PNG" alt="Inclusión real" class="card-image">
             <div class="card-content">
                 <h2>La inclusión real</h2>
                 <p>Aunque la educacion se ha democratizado, los aprendizajes no son iguales para todos; la didactica es necesaria para lograr que todos desarrollen habilidades de orden superior y no solo algunos[cite: 18, 19].</p>
@@ -222,7 +215,7 @@
         </div>
 
         <div class="card">
-            <img src="6.PNG" alt="Aptitudes" class="card-image">
+            <img src="6.PNG" alt="Superación de aptitudes" class="card-image">
             <div class="card-content">
                 <h2>Superación de aptitudes</h2>
                 <p>La enseñanza no esta coartada por las aptitudes innatas, la didactica busca reconocer y modificar significativamente los atributos de los estudiantes[cite: 23, 24].</p>
@@ -238,10 +231,10 @@
         </div>
 
         <div class="card">
-            <img src="8.PNG" alt="Profesionalización" class="card-image">
+            <img src="8.PNG" alt="Profesionalización docente" class="card-image">
             <div class="card-content">
                 <h2>La profesionalización docente</h2>
-                <p>Enseñar no es un talento natural ni una tarea facil; requiere la construccion de conocimientos especificos para poder enseñar mejor[cite: 32, 33].</p>
+                <p>Enseñar no es un talento natural ni una tarea facil; requiere la construccion de conocimientos especificos para poder enseñar mejor[cite: 32, 33, 35].</p>
             </div>
         </div>
     </div>
@@ -253,7 +246,6 @@
                 <p class="footer-text"><strong>Cátedra:</strong> Didáctica General</p>
                 <p class="footer-text"><strong>Carrera:</strong> Profesorado de Educación Secundaria en Tecnologías - Profesorado en Tecnologías</p>
             </div>
-
             <div class="footer-right">
                 <span class="footer-title">Integrantes</span>
                 <p class="footer-text">Benitez Franco Pedro</p>
@@ -262,7 +254,7 @@
             </div>
         </div>
         <div class="footer-divider">
-            "La didáctica es una disciplina teórica que estudia la acción pedagógica desde su descripción, explicación y fundamentación[cite: 36]."
+            "La didáctica es una disciplina teórica que estudia la acción pedagógica desde su descripción, explicación y fundamentación"[cite: 36].
         </div>
     </footer>
 </div>
