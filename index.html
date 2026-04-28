@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEEKS MAGICIAN</title>
-    
-    <!-- ESTA ES LA LÍNEA QUE AGREGA EL ICONO A LA PESTAÑA -->
+    <title>Infografía: El Saber Didáctico - Camilloni</title>
     <link rel="icon" href="geek.ico" type="image/x-icon">
 
     <style>
@@ -121,20 +119,66 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
         }
         
-        #mago-flotante:active {
-            cursor: grabbing;
-        }
+        #mago-flotante:active { cursor: grabbing; }
         
         #mago-flotante.agrandado {
-            width: 1500px; 
+            width: 500px; 
             max-height: 80vh; 
             object-fit: contain; 
             cursor: pointer;
             z-index: 1001; 
         }
+
+        /* --- ESTILOS DEL BOTÓN DE MÚSICA --- */
+        #control-musica {
+            position: fixed;
+            bottom: 30px;
+            left: 30px; /* Lo ponemos a la izquierda para que no choque con el mago */
+            width: 50px;
+            height: 50px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            z-index: 998; /* Debajo del mago y el modal */
+            color: white;
+            font-size: 24px;
+            transition: transform 0.2s, background 0.2s;
+            border: 2px solid var(--logo-cyan);
+        }
+        
+        #control-musica:hover {
+            transform: scale(1.1);
+            background: #34495e;
+        }
+        
+        /* Animación de brillo cuando la música está sonando */
+        #control-musica.reproduciendo {
+            animation: brillo-musica 1.5s infinite;
+        }
+
+        @keyframes brillo-musica {
+            0% { box-shadow: 0 0 0 0 rgba(0, 174, 239, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(0, 174, 239, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 174, 239, 0); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- REPRODUCTOR DE MÚSICA (El atributo loop hace que se repita infinitamente) -->
+    <audio id="musicaFondo" loop>
+        <source src="gladiador.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- BOTÓN FLOTANTE DE MÚSICA -->
+    <div id="control-musica" title="Reproducir / Pausar Música">
+        🎵
+    </div>
 
 <div class="container">
     <header>
@@ -189,6 +233,32 @@
 <img src="mago.png" id="mago-flotante" alt="Mago Interactivo">
 
 <script>
+    // --- CÓDIGO DE MÚSICA ---
+    const audio = document.getElementById('musicaFondo');
+    const botonMusica = document.getElementById('control-musica');
+    let musicaIniciada = false;
+
+    botonMusica.addEventListener('click', function() {
+        if (musicaIniciada === false) {
+            // Si es la primera vez, reproduce y cambia el icono
+            audio.play();
+            botonMusica.innerHTML = '🔊';
+            botonMusica.classList.add('reproduciendo');
+            musicaIniciada = true;
+        } else if (audio.paused) {
+            // Si estaba en pausa, reanuda
+            audio.play();
+            botonMusica.innerHTML = '🔊';
+            botonMusica.classList.add('reproduciendo');
+        } else {
+            // Si está sonando, pausa
+            audio.pause();
+            botonMusica.innerHTML = '🔇';
+            botonMusica.classList.remove('reproduciendo');
+        }
+    });
+
+    // --- CÓDIGO DEL MODAL DE IMÁGENES ---
     const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"];
     let indiceActual = 0;
 
@@ -211,6 +281,7 @@
         if (event.key === "ArrowLeft") cambiarImagen(-1);
     }
 
+    // --- CÓDIGO DEL MAGO (ARRASTRAR Y AGRANDAR) ---
     const mago = document.getElementById('mago-flotante');
     let estaArrastrando = false;
     let desplazamientoX, desplazamientoY;
