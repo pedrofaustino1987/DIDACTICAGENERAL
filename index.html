@@ -25,14 +25,17 @@
             background-attachment: fixed;
             margin: 0;
             padding: 20px;
+            /* Prevent text selection while dragging the wizard */
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
         }
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* --- Header corregido en 3 columnas --- */
+        /* --- Header --- */
         header {
             display: grid;
-            /* Definimos 3 columnas: las laterales automáticas y el centro más ancho */
             grid-template-columns: 1fr 2fr 1fr; 
             align-items: center;
             padding: 20px 30px;
@@ -48,7 +51,6 @@
         .header-column-right { text-align: right; }
 
         .header-logo { height: 80px; width: auto; }
-        /* Miniatura de la derecha */
         .header-thumb { height: 80px; width: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3); object-fit: cover; }
 
         .infographic-grid {
@@ -82,8 +84,18 @@
         }
 
         .modal-content { max-width: 85%; max-height: 85%; border-radius: 10px; border: 4px solid white; }
+        
+        .nav-modal {
+            cursor: pointer; position: absolute; top: 50%; padding: 16px; margin-top: -50px;
+            color: white; font-weight: bold; font-size: 30px; border-radius: 5px;
+            user-select: none; transition: 0.3s ease; background-color: rgba(0,0,0,0.5);
+        }
+        .nav-modal:hover { background-color: rgba(255,255,255,0.2); }
+        .nav-prev { left: 20px; }
+        .nav-next { right: 20px; }
 
-        .close { position: absolute; top: 20px; right: 40px; color: white; font-size: 40px; cursor: pointer; }
+        .close { position: absolute; top: 20px; right: 40px; color: white; font-size: 40px; cursor: pointer; font-weight: bold; }
+        .close:hover { color: #ccc; }
 
         /* --- Footer --- */
         footer {
@@ -96,6 +108,25 @@
         .footer-right { text-align: right; }
         .footer-title { display: block; font-weight: bold; margin-bottom: 15px; color: var(--logo-lime); text-transform: uppercase; }
 
+        /* --- ESTILOS DEL MAGO --- */
+        #mago-flotante {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 120px; /* Tamaño inicial */
+            height: auto;
+            z-index: 999; /* Por debajo del modal (1000) pero por encima del resto */
+            cursor: grab;
+            transition: transform 0.2s ease-out; /* Animación suave al agrandar/encoger */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); /* Sombra para que resalte */
+        }
+        #mago-flotante:active {
+            cursor: grabbing;
+        }
+        #mago-flotante.agrandado {
+            transform: scale(2); /* Se hace el doble de grande */
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -117,66 +148,21 @@
     </header>
 
     <div class="infographic-grid">
-        <div class="card" onclick="ampliarImagen(0)">
-            <img src="1.png" class="card-image">
-            <div class="card-content">
-                <h2>La ética de los medios</h2>
-                <p>La educación no puede ser solo una "ideología de la eficacia" donde el fin justifica los medios. Si todas las formas de influir en las personas fueran legítimas (incluso el adoctrinamiento), la didáctica no sería necesaria; pero como importa cómo se enseña respetando la libertad del sujeto, la disciplina es esencial.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(1)">
-            <img src="2.png" class="card-image">
-            <div class="card-content">
-                <h2>La variedad de la enseñanza</h2>
-                <p>No todas las formas de enseñar tienen el mismo valor o eficacia. La didáctica surge porque es necesario evaluar y seleccionar las mejores estrategias para lograr los propósitos educativos.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(2)">
-            <img src="3.png" class="card-image">
-            <div class="card-content">
-                <h2>La lógica de los contenidos</h2>
-                <p>Los conocimientos no deben transmitirse siguiendo la misma lógica con la que fueron descubiertos en su disciplina original. La didáctica es necesaria para "traducir" o transponer esos saberes al ámbito pedagógico.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(3)">
-            <img src="4.png" class="card-image">
-            <div class="card-content">
-                <h2>La crítica curricular</h2>
-                <p>Los planes de estudio no son neutrales; responden a contextos sociales y culturales específicos. La didáctica permite someter a estos saberes a una crítica constante para ajustarlos a las necesidades actuales.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(4)">
-            <img src="5.png" class="card-image">
-            <div class="card-content">
-                <h2>La inclusión real</h2>
-                <p>Aunque la educación se ha democratizado, los resultados no son iguales para todos: algunos desarrollan habilidades superiores y otros fracasan. La didáctica busca revertir esta desigualdad para que todos logren aprendizajes significativos.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(5)">
-            <img src="6.png" class="card-image">
-            <div class="card-content">
-                <h2>Superación de aptitudes</h2>
-                <p>Si creyéramos que la capacidad de aprender está predeterminada biológicamente por el "talento" o la herencia, la enseñanza no tendría sentido. La didáctica confía en que se pueden modificar los atributos de los estudiantes mediante una intervención adecuada.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(6)">
-            <img src="7.png" class="card-image">
-            <div class="card-content">
-                <h2>La complejidad de la evaluación</h2>
-                <p>Evaluar no es solo aplicar un reglamento o una escala de notas institucional. Es un proceso complejo, variable e imprevisto que requiere de la didáctica para ser analizado más allá de lo administrativo.</p>
-            </div>
-        </div>
-        <div class="card" onclick="ampliarImagen(7)">
-            <img src="8.png" class="card-image">
-            <div class="card-content">
-                <h2>La profesionalización docente</h2>
-                <p>Si enseñar fuera un talento innato o una tarea fácil, no haría falta estudiar para ello. La didáctica sostiene que siempre se puede enseñar mejor mediante la reflexión y revisión de la práctica.</p>
-            </div>
-        </div>
+        <!-- Las 8 tarjetas sin cambios para no hacer el código infinito -->
+        <div class="card" onclick="ampliarImagen(0)"><img src="1.png" class="card-image" alt="La ética de los medios"><div class="card-content"><h2>La ética de los medios</h2><p>La educación no puede ser solo una "ideología de la eficacia" donde el fin justifica los medios. Si todas las formas de influir en las personas fueran legítimas (incluso el adoctrinamiento), la didáctica no sería necesaria; pero como importa cómo se enseña respetando la libertad del sujeto, la disciplina es esencial.</p></div></div>
+        <div class="card" onclick="ampliarImagen(1)"><img src="2.png" class="card-image" alt="La variedad de la enseñanza"><div class="card-content"><h2>La variedad de la enseñanza</h2><p>No todas las formas de enseñar tienen el mismo valor o eficacia. La didáctica surge porque es necesario evaluar y seleccionar las mejores estrategias para lograr los propósitos educativos.</p></div></div>
+        <div class="card" onclick="ampliarImagen(2)"><img src="3.png" class="card-image" alt="La lógica de los contenidos"><div class="card-content"><h2>La lógica de los contenidos</h2><p>Los conocimientos no deben transmitirse siguiendo la misma lógica con la que fueron descubiertos en su disciplina original. La didáctica es necesaria para "traducir" o transponer esos saberes al ámbito pedagógico.</p></div></div>
+        <div class="card" onclick="ampliarImagen(3)"><img src="4.png" class="card-image" alt="La crítica curricular"><div class="card-content"><h2>La crítica curricular</h2><p>Los planes de estudio no son neutrales; responden a contextos sociales y culturales específicos. La didáctica permite someter a estos saberes a una crítica constante para ajustarlos a las necesidades actuales.</p></div></div>
+        <div class="card" onclick="ampliarImagen(4)"><img src="5.png" class="card-image" alt="La inclusión real"><div class="card-content"><h2>La inclusión real</h2><p>Aunque la educación se ha democratizado, los resultados no son iguales para todos: algunos desarrollan habilidades superiores y otros fracasan. La didáctica busca revertir esta desigualdad para que todos logren aprendizajes significativos.</p></div></div>
+        <div class="card" onclick="ampliarImagen(5)"><img src="6.png" class="card-image" alt="Superación de aptitudes"><div class="card-content"><h2>Superación de aptitudes</h2><p>Si creyéramos que la capacidad de aprender está predeterminada biológicamente por el "talento" o la herencia, la enseñanza no tendría sentido. La didáctica confía en que se pueden modificar los atributos de los estudiantes mediante una intervención adecuada.</p></div></div>
+        <div class="card" onclick="ampliarImagen(6)"><img src="7.png" class="card-image" alt="La complejidad de la evaluación"><div class="card-content"><h2>La complejidad de la evaluación</h2><p>Evaluar no es solo aplicar un reglamento o una escala de notas institucional. Es un proceso complejo, variable e imprevisto que requiere de la didáctica para ser analizado más allá de lo administrativo.</p></div></div>
+        <div class="card" onclick="ampliarImagen(7)"><img src="8.png" class="card-image" alt="La profesionalización docente"><div class="card-content"><h2>La profesionalización docente</h2><p>Si enseñar fuera un talento innato o una tarea fácil, no haría falta estudiar para ello. La didáctica sostiene que siempre se puede enseñar mejor mediante la reflexión y revisión de la práctica.</p></div></div>
     </div>
 
     <div id="miModal" class="modal">
         <span class="close" onclick="cerrarImagen()">&times;</span>
+        <a class="nav-modal nav-prev" onclick="cambiarImagen(-1)">&#10094;</a>
+        <a class="nav-modal nav-next" onclick="cambiarImagen(1)">&#10095;</a>
         <img class="modal-content" id="imgGrande">
     </div>
 
@@ -185,7 +171,7 @@
             <div class="footer-left">
                 <span class="footer-title">Información Académica</span>
                 <p><strong>Cátedra:</strong> Didáctica General</p>
-                <p><strong>Carrera:</strong> Profesorado de Educación Secundaria en Tecnologías - Profesorado en Tecnologías</p>
+                <p><strong>Carrera:</strong> Profesorado de Educación Secundaria en Tecnologías</p>
                 <p><strong>Docente:</strong> Flavia Paola Rodriguez</p>
             </div>
             <div class="footer-right">
@@ -198,16 +184,120 @@
     </footer>
 </div>
 
+<!-- IMAGEN DEL MAGO -->
+<img src="mago.png" id="mago-flotante" alt="Mago Interactivo">
+
 <script>
+    // --- CÓDIGO DEL MODAL DE IMÁGENES ---
     const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"];
     let indiceActual = 0;
+
     function ampliarImagen(indice) {
         indiceActual = indice;
         document.getElementById("imgGrande").src = imagenes[indiceActual];
         document.getElementById("miModal").style.display = "flex";
     }
     function cerrarImagen() { document.getElementById("miModal").style.display = "none"; }
+    function cambiarImagen(direccion) {
+        indiceActual += direccion;
+        if (indiceActual >= imagenes.length) indiceActual = 0;
+        if (indiceActual < 0) indiceActual = imagenes.length - 1;
+        document.getElementById("imgGrande").src = imagenes[indiceActual];
+    }
     window.onclick = function(event) { if (event.target == document.getElementById("miModal")) cerrarImagen(); }
+    window.onkeydown = function(event) {
+        if (event.key === "Escape") cerrarImagen();
+        if (event.key === "ArrowRight") cambiarImagen(1);
+        if (event.key === "ArrowLeft") cambiarImagen(-1);
+    }
+
+
+    // --- CÓDIGO DEL MAGO (ARRASTRAR Y AGRANDAR) ---
+    const mago = document.getElementById('mago-flotante');
+    let estaArrastrando = false;
+    let inicioX, inicioY, desplazamientoX, desplazamientoY;
+    let seMovio = false; // Variable para diferenciar un clic de un arrastre
+
+    // Evento: Presionar el mouse sobre el mago
+    mago.addEventListener('mousedown', (e) => {
+        estaArrastrando = true;
+        seMovio = false;
+        
+        // Calculamos en qué punto exacto de la imagen se hizo clic
+        const rectangulo = mago.getBoundingClientRect();
+        desplazamientoX = e.clientX - rectangulo.left;
+        desplazamientoY = e.clientY - rectangulo.top;
+        
+        // Quitamos la transición para que no haya "lag" al moverlo
+        mago.style.transition = 'none';
+        mago.style.cursor = 'grabbing';
+        
+        e.preventDefault(); // Evita que el navegador intente seleccionar la imagen
+    });
+
+    // Evento: Mover el mouse por la pantalla
+    document.addEventListener('mousemove', (e) => {
+        if (!estaArrastrando) return;
+        
+        seMovio = true; // Si entra aquí, significa que el mouse se movió
+        
+        // Calculamos la nueva posición
+        let nuevaX = e.clientX - desplazamientoX;
+        let nuevaY = e.clientY - desplazamientoY;
+        
+        // Aplicamos la posición (left y top)
+        mago.style.left = nuevaX + 'px';
+        mago.style.top = nuevaY + 'px';
+        mago.style.right = 'auto'; // Desactivamos el 'right' inicial del CSS
+        mago.style.bottom = 'auto'; // Desactivamos el 'bottom' inicial del CSS
+    });
+
+    // Evento: Soltar el mouse
+    document.addEventListener('mouseup', () => {
+        if (!estaArrastrando) return;
+        estaArrastrando = false;
+        
+        // Restauramos la transición suave (para el efecto de agrandar)
+        mago.style.transition = 'transform 0.2s ease-out';
+        mago.style.cursor = 'grab';
+    });
+
+    // Evento: Hacer Clic
+    mago.addEventListener('click', (e) => {
+        // Si el mouse se movió, no cuenta como clic, es un arrastre. Retornamos.
+        if (seMovio) return; 
+        
+        // Si fue un clic real, alternamos la clase 'agrandado'
+        mago.classList.toggle('agrandado');
+    });
+
+    // --- SOPORTE PARA PANTALLAS TÁCTILES (CELULARES/TABLETS) ---
+    mago.addEventListener('touchstart', (e) => {
+        estaArrastrando = true;
+        seMovio = false;
+        const touch = e.touches[0];
+        const rectangulo = mago.getBoundingClientRect();
+        desplazamientoX = touch.clientX - rectangulo.left;
+        desplazamientoY = touch.clientY - rectangulo.top;
+        mago.style.transition = 'none';
+    }, {passive: false});
+
+    document.addEventListener('touchmove', (e) => {
+        if (!estaArrastrando) return;
+        seMovio = true;
+        const touch = e.touches[0];
+        mago.style.left = (touch.clientX - desplazamientoX) + 'px';
+        mago.style.top = (touch.clientY - desplazamientoY) + 'px';
+        mago.style.right = 'auto';
+        mago.style.bottom = 'auto';
+    }, {passive: false});
+
+    document.addEventListener('touchend', () => {
+        if (!estaArrastrando) return;
+        estaArrastrando = false;
+        mago.style.transition = 'transform 0.2s ease-out';
+        if (!seMovio) mago.classList.toggle('agrandado');
+    });
 </script>
 
 </body>
