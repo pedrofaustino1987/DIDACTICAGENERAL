@@ -29,18 +29,18 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* --- Header en 3 Columnas --- */
+        /* --- Header corregido en 3 columnas --- */
         header {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr; /* Divide el espacio en 3: izquierda, centro y derecha */
+            /* Definimos 3 columnas: las laterales automáticas y el centro más ancho */
+            grid-template-columns: 1fr 2fr 1fr; 
             align-items: center;
-            padding: 20px;
+            padding: 20px 30px;
             background: var(--primary-dark);
             color: white;
             border-radius: 12px;
             border-bottom: 5px solid var(--logo-cyan);
             margin-bottom: 40px;
-            text-align: center;
         }
 
         .header-column-left { text-align: left; }
@@ -48,7 +48,8 @@
         .header-column-right { text-align: right; }
 
         .header-logo { height: 80px; width: auto; }
-        .header-thumb { height: 80px; width: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3); }
+        /* Miniatura de la derecha */
+        .header-thumb { height: 80px; width: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3); object-fit: cover; }
 
         .infographic-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -73,47 +74,27 @@
         .card h2 { color: var(--primary-dark); font-size: 1.1em; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .card p { font-size: 0.9em; line-height: 1.6; text-align: justify; }
 
-        /* --- Modal Galería --- */
+        /* --- Modal --- */
         .modal {
             display: none; position: fixed; z-index: 1000;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center;
         }
 
-        .modal-content { 
-            max-width: 85%; max-height: 85%; 
-            border-radius: 10px; border: 4px solid white; 
-            box-shadow: 0 0 30px rgba(255,255,255,0.2);
-        }
+        .modal-content { max-width: 85%; max-height: 85%; border-radius: 10px; border: 4px solid white; }
 
-        .close {
-            position: absolute; top: 20px; right: 40px; color: white;
-            font-size: 40px; font-weight: bold; cursor: pointer;
-        }
+        .close { position: absolute; top: 20px; right: 40px; color: white; font-size: 40px; cursor: pointer; }
 
-        .nav-hint {
-            position: absolute; bottom: 20px; color: white;
-            font-size: 0.9em; background: rgba(0,0,0,0.5);
-            padding: 5px 15px; border-radius: 20px;
-        }
-
+        /* --- Footer --- */
         footer {
             background-color: var(--footer-bg); color: #ecf0f1; padding: 40px;
             border-radius: 12px; border-top: 5px solid var(--logo-lime);
-            line-height: 1.4;
         }
 
         .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
         .footer-left, .footer-right { flex: 1; min-width: 250px; }
         .footer-right { text-align: right; }
-        
-        .footer-title { 
-            display: block; font-size: 1.2em; font-weight: bold; 
-            margin-bottom: 15px; color: var(--logo-lime);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        footer p { margin: 5px 0; font-size: 0.95em; }
+        .footer-title { display: block; font-weight: bold; margin-bottom: 15px; color: var(--logo-lime); text-transform: uppercase; }
 
     </style>
 </head>
@@ -126,7 +107,7 @@
         </div>
         
         <div class="header-column-center">
-            <h1 style="margin: 0; font-size: 1.8em;">Justificación de la Didáctica</h1>
+            <h1 style="margin: 0; font-size: 1.6em;">Justificación de la Didáctica</h1>
             <div style="opacity: 0.9; margin-top: 5px;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
         </div>
 
@@ -143,7 +124,6 @@
                 <p>No todas las formas de influencia sobre las personas son legítimas; es necesario considerar la correspondencia entre la formación y la libertad.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(1)">
             <img src="2.png" class="card-image">
             <div class="card-content">
@@ -151,7 +131,6 @@
                 <p>Históricamente se ha enseñado de múltiples formas. Si todas fueran igualmente eficaces, la didáctica sería innecesaria.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(2)">
             <img src="3.png" class="card-image">
             <div class="card-content">
@@ -159,7 +138,6 @@
                 <p>La enseñanza no debe limitarse a transmitir los conocimientos con la misma lógica con la que se descubrieron.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(3)">
             <img src="4.png" class="card-image">
             <div class="card-content">
@@ -167,7 +145,6 @@
                 <p>Los currículos deben someterse a una crítica constante, ya que cambian según la sociedad, la cultura y la clase social.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(4)">
             <img src="5.png" class="card-image">
             <div class="card-content">
@@ -175,7 +152,6 @@
                 <p>La didáctica es necesaria para lograr que todos desarrollen habilidades de orden superior y no solo algunos.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(5)">
             <img src="6.png" class="card-image">
             <div class="card-content">
@@ -183,7 +159,6 @@
                 <p>La enseñanza busca reconocer y modificar significativamente los atributos de los estudiantes más allá de lo innato.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(6)">
             <img src="7.png" class="card-image">
             <div class="card-content">
@@ -191,7 +166,6 @@
                 <p>Evaluar es un proceso complejo, variable e imprevisto que la didáctica debe estudiar profundamente.</p>
             </div>
         </div>
-
         <div class="card" onclick="ampliarImagen(7)">
             <img src="8.png" class="card-image">
             <div class="card-content">
@@ -204,7 +178,6 @@
     <div id="miModal" class="modal">
         <span class="close" onclick="cerrarImagen()">&times;</span>
         <img class="modal-content" id="imgGrande">
-        <div class="nav-hint"></div>
     </div>
 
     <footer>
@@ -228,43 +201,13 @@
 <script>
     const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"];
     let indiceActual = 0;
-
     function ampliarImagen(indice) {
         indiceActual = indice;
-        actualizarImagenModal();
+        document.getElementById("imgGrande").src = imagenes[indiceActual];
         document.getElementById("miModal").style.display = "flex";
     }
-
-    function cerrarImagen() {
-        document.getElementById("miModal").style.display = "none";
-    }
-
-    function actualizarImagenModal() {
-        document.getElementById("imgGrande").src = imagenes[indiceActual];
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (document.getElementById("miModal").style.display === "flex") {
-            if (event.key === "ArrowRight") {
-                indiceActual = (indiceActual + 1) % imagenes.length;
-                actualizarImagenModal();
-            } 
-            else if (event.key === "ArrowLeft") {
-                indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
-                actualizarImagenModal();
-            } 
-            else if (event.key === "Escape") {
-                cerrarImagen();
-            }
-        }
-    });
-
-    window.onclick = function(event) {
-        let modal = document.getElementById("miModal");
-        if (event.target == modal) {
-            cerrarImagen();
-        }
-    }
+    function cerrarImagen() { document.getElementById("miModal").style.display = "none"; }
+    window.onclick = function(event) { if (event.target == document.getElementById("miModal")) cerrarImagen(); }
 </script>
 
 </body>
