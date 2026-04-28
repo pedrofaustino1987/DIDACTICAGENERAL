@@ -18,13 +18,11 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            /* --- Modificación del Fondo --- */
             background-image: url('background.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            /* ---------------------------- */
             margin: 0;
             padding: 20px;
         }
@@ -32,13 +30,20 @@
         .container { max-width: 1200px; margin: 0 auto; }
 
         header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 20px 40px; background: var(--primary-dark); color: white;
-            border-radius: 12px; border-bottom: 5px solid var(--logo-cyan);
+            display: flex; 
+            flex-direction: column; /* Alinea los elementos en columna para facilitar el centrado */
+            align-items: center; 
+            justify-content: center; /* Centra el contenido vertical y horizontalmente */
+            padding: 20px 40px; 
+            background: var(--primary-dark); 
+            color: white;
+            border-radius: 12px; 
+            border-bottom: 5px solid var(--logo-cyan);
             margin-bottom: 40px;
+            text-align: center; /* Asegura que el texto interno esté centrado */
         }
 
-        .header-logo { height: 80px; width: auto; }
+        .header-logo { height: 80px; width: auto; margin-bottom: 10px; }
 
         .infographic-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -87,7 +92,6 @@
             padding: 5px 15px; border-radius: 20px;
         }
 
-        /* --- Estilos Footer --- */
         footer {
             background-color: var(--footer-bg); color: #ecf0f1; padding: 40px;
             border-radius: 12px; border-top: 5px solid var(--logo-lime);
@@ -113,8 +117,8 @@
 <div class="container">
     <header>
         <img src="logoInno.png" alt="Logo" class="header-logo">
-        <div style="text-align: right;">
-            <h1>Justificación de la Didáctica</h1>
+        <div>
+            <h1 style="margin: 5px 0;">Justificación de la Didáctica</h1>
             <div style="opacity: 0.9;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
         </div>
     </header>
