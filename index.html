@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geeks Magic</title>
+    <title>Infografía: El Saber Didáctico - Camilloni</title>
+    
+    <!-- ESTA ES LA LÍNEA QUE AGREGA EL ICONO A LA PESTAÑA -->
+    <link rel="icon" href="geek.ico" type="image/x-icon">
+
     <style>
         :root {
             --logo-magenta: #e6007e;
@@ -104,16 +108,15 @@
         .footer-right { text-align: right; }
         .footer-title { display: block; font-weight: bold; margin-bottom: 15px; color: var(--logo-lime); text-transform: uppercase; }
 
-        /* --- ESTILOS DEL MAGO ACTUALIZADOS --- */
+        /* --- ESTILOS DEL MAGO --- */
         #mago-flotante {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 120px; /* Tamaño inicial chiquito */
+            width: 120px; 
             height: auto;
             z-index: 999; 
             cursor: grab;
-            /* Ahora animamos el ancho y alto en vez de un "transform" */
             transition: width 0.3s ease, height 0.3s ease; 
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
         }
@@ -122,13 +125,12 @@
             cursor: grabbing;
         }
         
-        /* Estado cuando se hace clic (Se agranda a tamaño legible real) */
         #mago-flotante.agrandado {
-            width: 1000px; /* Tamaño fijo garantizado para poder leerlo */
-            max-height: 80vh; /* Por si es muy alta, no sobrepase la pantalla */
-            object-fit: contain; /* Mantiene las proporciones si se aplica el max-height */
+            width: 500px; 
+            max-height: 80vh; 
+            object-fit: contain; 
             cursor: pointer;
-            z-index: 1001; /* Lo ponemos por delante de todo cuando está grande */
+            z-index: 1001; 
         }
     </style>
 </head>
@@ -184,11 +186,9 @@
     </footer>
 </div>
 
-<!-- IMAGEN DEL MAGO -->
 <img src="mago.png" id="mago-flotante" alt="Mago Interactivo">
 
 <script>
-    // --- CÓDIGO DEL MODAL DE IMÁGENES ---
     const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"];
     let indiceActual = 0;
 
@@ -211,10 +211,9 @@
         if (event.key === "ArrowLeft") cambiarImagen(-1);
     }
 
-    // --- CÓDIGO DEL MAGO (ARRASTRAR Y AGRANDAR) ---
     const mago = document.getElementById('mago-flotante');
     let estaArrastrando = false;
-    let inicioX, inicioY, desplazamientoX, desplazamientoY;
+    let desplazamientoX, desplazamientoY;
     let seMovio = false;
 
     mago.addEventListener('mousedown', (e) => {
@@ -223,8 +222,6 @@
         const rectangulo = mago.getBoundingClientRect();
         desplazamientoX = e.clientX - rectangulo.left;
         desplazamientoY = e.clientY - rectangulo.top;
-        
-        // Apagamos la transición mientras se arrastra para evitar que se "trabe"
         mago.style.transition = 'none';
         mago.style.cursor = 'grabbing';
         e.preventDefault();
@@ -233,10 +230,8 @@
     document.addEventListener('mousemove', (e) => {
         if (!estaArrastrando) return;
         seMovio = true;
-        let nuevaX = e.clientX - desplazamientoX;
-        let nuevaY = e.clientY - desplazamientoY;
-        mago.style.left = nuevaX + 'px';
-        mago.style.top = nuevaY + 'px';
+        mago.style.left = (e.clientX - desplazamientoX) + 'px';
+        mago.style.top = (e.clientY - desplazamientoY) + 'px';
         mago.style.right = 'auto';
         mago.style.bottom = 'auto';
     });
@@ -244,7 +239,6 @@
     document.addEventListener('mouseup', () => {
         if (!estaArrastrando) return;
         estaArrastrando = false;
-        // Encendemos la transición de nuevo para que el efecto de agrandar/achicar sea suave
         mago.style.transition = 'width 0.3s ease, height 0.3s ease';
         mago.style.cursor = 'grab';
     });
@@ -254,7 +248,6 @@
         mago.classList.toggle('agrandado');
     });
 
-    // --- SOPORTE TÁCTIL ---
     mago.addEventListener('touchstart', (e) => {
         estaArrastrando = true;
         seMovio = false;
