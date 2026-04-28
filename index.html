@@ -25,7 +25,6 @@
             background-attachment: fixed;
             margin: 0;
             padding: 20px;
-            /* Prevent text selection while dragging the wizard */
             -webkit-user-select: none; 
             -ms-user-select: none; 
             user-select: none; 
@@ -33,7 +32,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* --- Header --- */
         header {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr; 
@@ -76,7 +74,6 @@
         .card h2 { color: var(--primary-dark); font-size: 1.1em; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .card p { font-size: 0.9em; line-height: 1.6; text-align: justify; }
 
-        /* --- Modal --- */
         .modal {
             display: none; position: fixed; z-index: 1000;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -97,7 +94,6 @@
         .close { position: absolute; top: 20px; right: 40px; color: white; font-size: 40px; cursor: pointer; font-weight: bold; }
         .close:hover { color: #ccc; }
 
-        /* --- Footer --- */
         footer {
             background-color: var(--footer-bg); color: #ecf0f1; padding: 40px;
             border-radius: 12px; border-top: 5px solid var(--logo-lime);
@@ -108,24 +104,31 @@
         .footer-right { text-align: right; }
         .footer-title { display: block; font-weight: bold; margin-bottom: 15px; color: var(--logo-lime); text-transform: uppercase; }
 
-        /* --- ESTILOS DEL MAGO --- */
+        /* --- ESTILOS DEL MAGO ACTUALIZADOS --- */
         #mago-flotante {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 120px; /* Tamaño inicial */
+            width: 120px; /* Tamaño inicial chiquito */
             height: auto;
-            z-index: 999; /* Por debajo del modal (1000) pero por encima del resto */
+            z-index: 999; 
             cursor: grab;
-            transition: transform 0.2s ease-out; /* Animación suave al agrandar/encoger */
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); /* Sombra para que resalte */
+            /* Ahora animamos el ancho y alto en vez de un "transform" */
+            transition: width 0.3s ease, height 0.3s ease; 
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
         }
+        
         #mago-flotante:active {
             cursor: grabbing;
         }
+        
+        /* Estado cuando se hace clic (Se agranda a tamaño legible real) */
         #mago-flotante.agrandado {
-            transform: scale(2); /* Se hace el doble de grande */
+            width: 500px; /* Tamaño fijo garantizado para poder leerlo */
+            max-height: 80vh; /* Por si es muy alta, no sobrepase la pantalla */
+            object-fit: contain; /* Mantiene las proporciones si se aplica el max-height */
             cursor: pointer;
+            z-index: 1001; /* Lo ponemos por delante de todo cuando está grande */
         }
     </style>
 </head>
@@ -136,19 +139,16 @@
         <div class="header-column-left">
             <img src="logoInno.png" alt="Logo Izquierda" class="header-logo">
         </div>
-        
         <div class="header-column-center">
             <h1 style="margin: 0; font-size: 1.6em;">Justificación de la Didáctica</h1>
             <div style="opacity: 0.9; margin-top: 5px;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
         </div>
-
         <div class="header-column-right">
             <img src="background.png" alt="Miniatura Derecha" class="header-thumb">
         </div>
     </header>
 
     <div class="infographic-grid">
-        <!-- Las 8 tarjetas sin cambios para no hacer el código infinito -->
         <div class="card" onclick="ampliarImagen(0)"><img src="1.png" class="card-image" alt="La ética de los medios"><div class="card-content"><h2>La ética de los medios</h2><p>La educación no puede ser solo una "ideología de la eficacia" donde el fin justifica los medios. Si todas las formas de influir en las personas fueran legítimas (incluso el adoctrinamiento), la didáctica no sería necesaria; pero como importa cómo se enseña respetando la libertad del sujeto, la disciplina es esencial.</p></div></div>
         <div class="card" onclick="ampliarImagen(1)"><img src="2.png" class="card-image" alt="La variedad de la enseñanza"><div class="card-content"><h2>La variedad de la enseñanza</h2><p>No todas las formas de enseñar tienen el mismo valor o eficacia. La didáctica surge porque es necesario evaluar y seleccionar las mejores estrategias para lograr los propósitos educativos.</p></div></div>
         <div class="card" onclick="ampliarImagen(2)"><img src="3.png" class="card-image" alt="La lógica de los contenidos"><div class="card-content"><h2>La lógica de los contenidos</h2><p>Los conocimientos no deben transmitirse siguiendo la misma lógica con la que fueron descubiertos en su disciplina original. La didáctica es necesaria para "traducir" o transponer esos saberes al ámbito pedagógico.</p></div></div>
@@ -211,67 +211,50 @@
         if (event.key === "ArrowLeft") cambiarImagen(-1);
     }
 
-
     // --- CÓDIGO DEL MAGO (ARRASTRAR Y AGRANDAR) ---
     const mago = document.getElementById('mago-flotante');
     let estaArrastrando = false;
     let inicioX, inicioY, desplazamientoX, desplazamientoY;
-    let seMovio = false; // Variable para diferenciar un clic de un arrastre
+    let seMovio = false;
 
-    // Evento: Presionar el mouse sobre el mago
     mago.addEventListener('mousedown', (e) => {
         estaArrastrando = true;
         seMovio = false;
-        
-        // Calculamos en qué punto exacto de la imagen se hizo clic
         const rectangulo = mago.getBoundingClientRect();
         desplazamientoX = e.clientX - rectangulo.left;
         desplazamientoY = e.clientY - rectangulo.top;
         
-        // Quitamos la transición para que no haya "lag" al moverlo
+        // Apagamos la transición mientras se arrastra para evitar que se "trabe"
         mago.style.transition = 'none';
         mago.style.cursor = 'grabbing';
-        
-        e.preventDefault(); // Evita que el navegador intente seleccionar la imagen
+        e.preventDefault();
     });
 
-    // Evento: Mover el mouse por la pantalla
     document.addEventListener('mousemove', (e) => {
         if (!estaArrastrando) return;
-        
-        seMovio = true; // Si entra aquí, significa que el mouse se movió
-        
-        // Calculamos la nueva posición
+        seMovio = true;
         let nuevaX = e.clientX - desplazamientoX;
         let nuevaY = e.clientY - desplazamientoY;
-        
-        // Aplicamos la posición (left y top)
         mago.style.left = nuevaX + 'px';
         mago.style.top = nuevaY + 'px';
-        mago.style.right = 'auto'; // Desactivamos el 'right' inicial del CSS
-        mago.style.bottom = 'auto'; // Desactivamos el 'bottom' inicial del CSS
+        mago.style.right = 'auto';
+        mago.style.bottom = 'auto';
     });
 
-    // Evento: Soltar el mouse
     document.addEventListener('mouseup', () => {
         if (!estaArrastrando) return;
         estaArrastrando = false;
-        
-        // Restauramos la transición suave (para el efecto de agrandar)
-        mago.style.transition = 'transform 0.2s ease-out';
+        // Encendemos la transición de nuevo para que el efecto de agrandar/achicar sea suave
+        mago.style.transition = 'width 0.3s ease, height 0.3s ease';
         mago.style.cursor = 'grab';
     });
 
-    // Evento: Hacer Clic
     mago.addEventListener('click', (e) => {
-        // Si el mouse se movió, no cuenta como clic, es un arrastre. Retornamos.
         if (seMovio) return; 
-        
-        // Si fue un clic real, alternamos la clase 'agrandado'
         mago.classList.toggle('agrandado');
     });
 
-    // --- SOPORTE PARA PANTALLAS TÁCTILES (CELULARES/TABLETS) ---
+    // --- SOPORTE TÁCTIL ---
     mago.addEventListener('touchstart', (e) => {
         estaArrastrando = true;
         seMovio = false;
@@ -295,7 +278,7 @@
     document.addEventListener('touchend', () => {
         if (!estaArrastrando) return;
         estaArrastrando = false;
-        mago.style.transition = 'transform 0.2s ease-out';
+        mago.style.transition = 'width 0.3s ease, height 0.3s ease';
         if (!seMovio) mago.classList.toggle('agrandado');
     });
 </script>
