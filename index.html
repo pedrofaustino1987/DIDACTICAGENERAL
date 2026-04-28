@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografía: El Saber Didáctico - Camilloni</title>
+    <title>GEEKS MAGICIAN</title>
     <link rel="icon" href="geek.ico" type="image/x-icon">
 
     <style>
@@ -106,7 +106,6 @@
         .footer-right { text-align: right; }
         .footer-title { display: block; font-weight: bold; margin-bottom: 15px; color: var(--logo-lime); text-transform: uppercase; }
 
-        /* --- ESTILOS DEL MAGO --- */
         #mago-flotante {
             position: fixed;
             bottom: 30px;
@@ -122,18 +121,17 @@
         #mago-flotante:active { cursor: grabbing; }
         
         #mago-flotante.agrandado {
-            width: 500px; 
+            width: 1200px; 
             max-height: 80vh; 
             object-fit: contain; 
             cursor: pointer;
             z-index: 1001; 
         }
 
-        /* --- ESTILOS DEL BOTÓN DE MÚSICA --- */
         #control-musica {
             position: fixed;
             bottom: 30px;
-            left: 30px; /* Lo ponemos a la izquierda para que no choque con el mago */
+            left: 30px;
             width: 50px;
             height: 50px;
             background: var(--primary-dark);
@@ -143,7 +141,7 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            z-index: 998; /* Debajo del mago y el modal */
+            z-index: 998; 
             color: white;
             font-size: 24px;
             transition: transform 0.2s, background 0.2s;
@@ -155,7 +153,6 @@
             background: #34495e;
         }
         
-        /* Animación de brillo cuando la música está sonando */
         #control-musica.reproduciendo {
             animation: brillo-musica 1.5s infinite;
         }
@@ -169,13 +166,11 @@
 </head>
 <body>
 
-    <!-- REPRODUCTOR DE MÚSICA (El atributo loop hace que se repita infinitamente) -->
     <audio id="musicaFondo" loop>
         <source src="gladiador.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
-    <!-- BOTÓN FLOTANTE DE MÚSICA -->
     <div id="control-musica" title="Reproducir / Pausar Música">
         🎵
     </div>
@@ -233,25 +228,55 @@
 <img src="mago.png" id="mago-flotante" alt="Mago Interactivo">
 
 <script>
-    // --- CÓDIGO DE MÚSICA ---
+    // --- VARIABLES GLOBALES DE MÚSICA ---
     const audio = document.getElementById('musicaFondo');
     const botonMusica = document.getElementById('control-musica');
     let musicaIniciada = false;
 
-    botonMusica.addEventListener('click', function() {
-        if (musicaIniciada === false) {
-            // Si es la primera vez, reproduce y cambia el icono
-            audio.play();
+    // Función para activar la música y cambiar el botón
+    function activarMusica() {
+        audio.play().then(() => {
             botonMusica.innerHTML = '🔊';
             botonMusica.classList.add('reproduciendo');
             musicaIniciada = true;
+        }).catch(error => {
+            // Si falla incluso con el clic, lo dejamos silenciado
+            console.log("No se pudo reproducir el audio:", error);
+        });
+    }
+
+    // 1. INTENTO DE AUTOPLAY DIRECTO AL CARGAR LA PÁGINA
+    window.addEventListener("DOMContentLoaded", () => {
+        let promesaReproduccion = audio.play();
+        
+        if (promesaReproduccion !== undefined) {
+            promesaReproduccion.then(() => {
+                // ¡ÉXOS! El navegador permitió el sonido automático
+                activarMusica();
+            }).catch(() => {
+                // BLOQUEADO. El navegador no dejó. 
+                // Activamos el "PLAN B": Que empiece en el primer clic del usuario en cualquier lado
+                document.body.addEventListener('click', function iniciarEnPrimerClic() {
+                    if (!musicaIniciada) {
+                        activarMusica();
+                    }
+                    document.body.removeEventListener('click', iniciarEnPrimerClic); // Lo eliminamos para que no se repita
+                }, { once: true });
+            });
+        }
+    });
+
+    // 2. CONTROL MANUAL DEL BOTÓN DE MÚSICA
+    botonMusica.addEventListener('click', function(e) {
+        e.stopPropagation(); // Evita que este clic active el "PLAN B" de arriba al mismo tiempo
+        
+        if (!musicaIniciada) {
+            activarMusica();
         } else if (audio.paused) {
-            // Si estaba en pausa, reanuda
             audio.play();
             botonMusica.innerHTML = '🔊';
             botonMusica.classList.add('reproduciendo');
         } else {
-            // Si está sonando, pausa
             audio.pause();
             botonMusica.innerHTML = '🔇';
             botonMusica.classList.remove('reproduciendo');
@@ -281,7 +306,7 @@
         if (event.key === "ArrowLeft") cambiarImagen(-1);
     }
 
-    // --- CÓDIGO DEL MAGO (ARRASTRAR Y AGRANDAR) ---
+    // --- CÓDIGO DEL MAGO ---
     const mago = document.getElementById('mago-flotante');
     let estaArrastrando = false;
     let desplazamientoX, desplazamientoY;
