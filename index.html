@@ -29,21 +29,26 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
+        /* --- Header en 3 Columnas --- */
         header {
-            display: flex; 
-            flex-direction: column; /* Alinea los elementos en columna para facilitar el centrado */
-            align-items: center; 
-            justify-content: center; /* Centra el contenido vertical y horizontalmente */
-            padding: 20px 40px; 
-            background: var(--primary-dark); 
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr; /* Divide el espacio en 3: izquierda, centro y derecha */
+            align-items: center;
+            padding: 20px;
+            background: var(--primary-dark);
             color: white;
-            border-radius: 12px; 
+            border-radius: 12px;
             border-bottom: 5px solid var(--logo-cyan);
             margin-bottom: 40px;
-            text-align: center; /* Asegura que el texto interno esté centrado */
+            text-align: center;
         }
 
-        .header-logo { height: 80px; width: auto; margin-bottom: 10px; }
+        .header-column-left { text-align: left; }
+        .header-column-center { text-align: center; }
+        .header-column-right { text-align: right; }
+
+        .header-logo { height: 80px; width: auto; }
+        .header-thumb { height: 80px; width: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,0.3); }
 
         .infographic-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -116,10 +121,17 @@
 
 <div class="container">
     <header>
-        <img src="logoInno.png" alt="Logo" class="header-logo">
-        <div>
-            <h1 style="margin: 5px 0;">Justificación de la Didáctica</h1>
-            <div style="opacity: 0.9;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
+        <div class="header-column-left">
+            <img src="logoInno.png" alt="Logo Izquierda" class="header-logo">
+        </div>
+        
+        <div class="header-column-center">
+            <h1 style="margin: 0; font-size: 1.8em;">Justificación de la Didáctica</h1>
+            <div style="opacity: 0.9; margin-top: 5px;">Alicia R.W. de Camilloni - El Saber Didáctico</div>
+        </div>
+
+        <div class="header-column-right">
+            <img src="background.png" alt="Miniatura Derecha" class="header-thumb">
         </div>
     </header>
 
